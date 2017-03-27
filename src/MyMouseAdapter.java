@@ -3,7 +3,7 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
+//import java.util.Random;
 import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
@@ -55,16 +55,15 @@ public class MyMouseAdapter extends MouseAdapter {
 			myOtherPanel.repaint();
 			//Do nothing
 			break;
-	
-			
 			
 	        
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
 			break;
 		}
+	
 	}
-		
+
 	public void mouseReleased(MouseEvent e) {
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
@@ -102,13 +101,13 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 						
 					} else {
-						
-						
 						myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.gray) ;
 						
-						break;
 						
-					}else{
+						
+						//break;
+						
+					//}else{
 			
 						if(myPanel.isMine(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 							Color newColor = Color.BLACK;
@@ -144,6 +143,7 @@ public class MyMouseAdapter extends MouseAdapter {
 		
 			myPanel.repaint();
 			break;
+			
 		case 3:		//Right mouse button
 			Component b = e.getComponent();
 			while (!(b instanceof JFrame)) {
@@ -190,8 +190,9 @@ public class MyMouseAdapter extends MouseAdapter {
 			break;
 		}
 	}
-		
-	}
+}
 	
+	
+
 
 
