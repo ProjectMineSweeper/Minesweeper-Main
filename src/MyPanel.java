@@ -12,10 +12,14 @@ public class MyPanel extends JPanel {
 	private static final int INNER_CELL_SIZE = 40;
 	private static final int TOTAL_COLUMNS = 9;
 	private static final int TOTAL_ROWS = 10;   //Last row has only one cell
+	public int counterOfBombs = 0;
 	public int x = -1;
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
+	public boolean minesPanel[][] = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int[][] sorroundingMines = new int[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int mines = 10;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
@@ -38,6 +42,28 @@ public class MyPanel extends JPanel {
 				colorArray[x][y] = Color.WHITE;
 			}
 		}
+		
+		// This generates the mines inside the grid
+		
+				for (int i = 0; i < mines; i++ ){
+					
+					for (int j = 0; j < 1; j++){
+						
+						Random rand = new Random();
+						
+						int x = rand.nextInt(TOTAL_COLUMNS);
+						int y = rand.nextInt(TOTAL_ROWS);
+						
+						if(minesPanel[x][y] == false){
+							minesPanel[x][y] = true;
+						}
+						
+						else{
+							
+							i--;
+						}
+					}
+				}
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -75,6 +101,16 @@ public class MyPanel extends JPanel {
 					Color c = colorArray[x][y];
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
+				}
+			}
+		}
+		
+		//Displays number of bombs in perimeter
+		for(x=0; x < 9; x++){
+			for(y=0; y < 9; y++){
+				if(sorroundingMines[x][y] !=0) {
+					g.setColor(Color.BLUE);
+					g.drawString("" + sorroundingMines[x][y], (x*40)+75, (y*40)+85);
 				}
 			}
 		}
@@ -129,4 +165,126 @@ public class MyPanel extends JPanel {
 		}
 		return y;
 	}
+		//Determines whether the cell is a mine or not
+		public boolean isMine (int x, int y){
+			
+			if (minesPanel[x][y] == true){
+				
+				return true;	
+			}
+			return false;
+		}
+		
+		//Checks how many bombs are in the perimeter of that square
+		public int minesInPerimeter(int xCoordinate, int yCoordinate){
+			//Resetting counter
+			counterOfBombs = 0;
+			//Pressed squares that have 8 bombs in the perimeter
+			if((xCoordinate != 0 && xCoordinate!= 8) && (yCoordinate !=0 && yCoordinate !=8)){
+				for(int x = -1; x < 2; x++){
+					for(int y =-1; y < 2; y++){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;
+						}
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+			}
+			//Pressed top left corner square
+			if(xCoordinate == 0 && yCoordinate ==0){
+				for(int x = 1; x >= 0; x--){
+					for(y = 0; y < 2; y++){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;
+						}
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+			}
+			//Pressed bottom left corner square
+			if(xCoordinate == 0 && yCoordinate == 8){
+				for(int x = 0; x < 2; x++){
+					for(int y = 0; y >= -1; y-- ){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;
+						}
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+			}
+			//Pressed top right corner square
+			if(xCoordinate == 8 && yCoordinate == 0){
+				for(int x= -1; x < 1; x++){
+					for(int y =0; y < 2; y++){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;		
+						}
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+			}
+			//Pressed bottom right corner square
+			if(xCoordinate == 8 && yCoordinate == 8){
+				for(int x = -1; x < 1; x++){
+					for(int y = -1; y < 1; y++){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;		
+						}
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+			}
+			//Pressed squares in left wall that are not the corners
+			if(xCoordinate == 0 && (yCoordinate !=0 && yCoordinate != 8)){
+				for(int x = 0; x < 2; x++){
+					for(int y = -1; y < 2; y++){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;		
+						}						
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+			}
+			//Pressed squares in bottom wall that are not the corners
+			if(yCoordinate == 8 && (xCoordinate != 0 && xCoordinate !=8)){
+				for(int x =-1; x < 2; x++){
+					for(int y = -1; y < 1; y++){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;		
+						}						
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+
+			}
+			//Pressed squares in right wall that are not the corners
+			if(xCoordinate == 8 && (yCoordinate !=0 && yCoordinate != 8)){
+				for(int x = -1; x < 1; x++){
+					for(int y = -1; y < 2; y++){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;		
+						}						
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+			}
+			//Pressed squares in top wal that are not the corners
+			if(yCoordinate == 0 && (xCoordinate !=0 && xCoordinate!=8)){
+				for(int x = -1; x < 2; x++){
+					for(int y = 0; y < 2; y++){
+						if(this.isMine(xCoordinate + x, yCoordinate + y)){
+							counterOfBombs++;		
+						}						
+					}
+				}
+				sorroundingMines[xCoordinate][yCoordinate] = counterOfBombs;
+			}
+			return counterOfBombs;
+		}
+
 }
+	
+			
+		
+		
+	
