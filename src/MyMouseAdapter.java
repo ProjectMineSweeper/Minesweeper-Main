@@ -3,8 +3,10 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JDialog;
 //import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MyMouseAdapter extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
@@ -101,6 +103,10 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 						
 					} else {
+						
+						if ((gridX > 8)&&(gridY > 8)){
+							
+						}
 									
 						if(myPanel.isMine(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 							Color newColor = Color.BLACK;
@@ -114,7 +120,20 @@ public class MyMouseAdapter extends MouseAdapter {
 									}
 								}
 							}
+							
+							//Genera un panel con mensaje de "Game Over"
+							final JOptionPane pane = new JOptionPane("Game Over");
+							
+							final JDialog lose = pane.createDialog("Better Luck Next Time!");
+							
+							lose.setVisible(true);
+							
+							break;
 						}
+					
+					
+			
+		
 						else if(myPanel.minesInPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY) == 0){
 							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.GRAY; 
 							myPanel.repaint();
@@ -143,11 +162,11 @@ public class MyMouseAdapter extends MouseAdapter {
 //						}
 					}
 				}
-			}
+			
 		
 			myPanel.repaint();
 			break;
-			
+			}		
 		case 3:		//Right mouse button
 			Component b = e.getComponent();
 			while (!(b instanceof JFrame)) {
@@ -194,7 +213,5 @@ public class MyMouseAdapter extends MouseAdapter {
 			break;
 		}
 	}
+	
 }
-	
-	
-
