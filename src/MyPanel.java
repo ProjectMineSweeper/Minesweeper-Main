@@ -3,6 +3,8 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.util.Random;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
@@ -282,8 +284,24 @@ public class MyPanel extends JPanel {
 			return counterOfBombs;
 		}
 
-}
+public boolean Winner (int x, int y){
+			
+			if (minesPanel[x][y] == false){
+				
+			}
+				
+				if (Winner(x, y)){
+					
+					final JOptionPane pane = new JOptionPane ("You Have Won The Game");
+					final JDialog win = pane.createDialog("Congrats");
+					win.setVisible(true);
+				}
+				return true;
+
 	
+			
+			}
+}
 			
 		
 		
