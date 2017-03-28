@@ -103,6 +103,10 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 						
 					} else {
+						
+						if ((gridX > 8)&&(gridY > 8)){
+							
+						}
 									
 						if(myPanel.isMine(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 							Color newColor = Color.BLACK;
@@ -127,37 +131,7 @@ public class MyMouseAdapter extends MouseAdapter {
 							break;
 						}
 					
-					}
 					
-					// Determina si el jugador ha ganado el juego
-					
-					boolean winner = true;
-					
-					for (int i = 0; i < 9; i++){
-						
-						for (int j = 0; j < 9; j++ ){
-							
-							if (myPanel.colorArray[i][j].equals(Color.WHITE)&& !myPanel.isMine(i, j)){
-							
-							winner = false;
-							
-							break;
-						}
-						
-						if (!winner){
-							break;
-							
-						}
-						
-					//Genera el mensaje de que ha ganado
-						
-						if (winner){
-							
-							final JOptionPane pane = new JOptionPane ("You Have Won The Game");
-							final JDialog win = pane.createDialog("Congrats");
-							win.setVisible(true);
-						}
-		
 			
 		
 						else if(myPanel.minesInPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY) == 0){
@@ -188,11 +162,11 @@ public class MyMouseAdapter extends MouseAdapter {
 //						}
 					}
 				}
-			}
+			
 		
 			myPanel.repaint();
 			break;
-			}			
+			}		
 		case 3:		//Right mouse button
 			Component b = e.getComponent();
 			while (!(b instanceof JFrame)) {
@@ -239,10 +213,7 @@ public class MyMouseAdapter extends MouseAdapter {
 			break;
 		}
 	}
+	
 }
 
-
 	
-
-
-
