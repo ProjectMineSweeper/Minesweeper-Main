@@ -3,8 +3,10 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JDialog;
 //import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MyMouseAdapter extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
@@ -101,14 +103,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 						
 					} else {
-						myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.gray) ;
-						
-						
-						
-						//break;
-						
-					//}else{
-			
+									
 						if(myPanel.isMine(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 							Color newColor = Color.BLACK;
 							for(int i = 0; i<9; i++){
@@ -121,7 +116,61 @@ public class MyMouseAdapter extends MouseAdapter {
 									}
 								}
 							}
+							
+							//Genera un panel con mensaje de "Game Over"
+							final JOptionPane pane = new JOptionPane("Game Over");
+							
+							final JDialog lose = pane.createDialog("Better Luck Next Time!");
+							
+							lose.setVisible(true);
+							
+							break;
 						}
+					
+					}
+					
+					// Determina si el jugador ha ganado el juego
+					
+					boolean winner = true;
+					
+					for (int i = 0; i < 9; i++){
+						
+						for (int j = 0; j < 9; j++ ){
+							
+							if (myPanel.colorArray[i][j].equals(Color.WHITE)&& !myPanel.isMine(i, j)){
+							
+							winner = false;
+							
+							break;
+						}
+						
+						if (!winner){
+							break;
+							
+						}
+						
+					//Genera el mensaje de que ha ganado
+						
+						if (winner){
+							
+							final JOptionPane pane = new JOptionPane ("You Have Won The Game");
+							final JDialog win = pane.createDialog("Congrats");
+							win.setVisible(true);
+						}
+		
+			
+		
+						else if(myPanel.minesInPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY) == 0){
+							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.GRAY; 
+							myPanel.repaint();
+							System.out.println(myPanel.minesInPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY));
+						}
+						else{
+							//Poner el numer de bombas que tiene al rededor
+							
+						}
+
+						
 					
 					
 //						if ((gridX == 0) || (gridY == 0)) {
@@ -143,7 +192,7 @@ public class MyMouseAdapter extends MouseAdapter {
 		
 			myPanel.repaint();
 			break;
-			
+			}			
 		case 3:		//Right mouse button
 			Component b = e.getComponent();
 			while (!(b instanceof JFrame)) {
@@ -191,7 +240,8 @@ public class MyMouseAdapter extends MouseAdapter {
 		}
 	}
 }
-	
+
+
 	
 
 
