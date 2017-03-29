@@ -169,6 +169,25 @@ public class MyPanel extends JPanel {
 			}
 			return false;
 		}
+		//Uncovers squares in perimeter
+		public void uncoverPerimeter(int xCoordinate, int yCoordinate){
+			this.colorArray[xCoordinate][yCoordinate] = Color.GRAY; 
+			this.repaint();	
+			for(x = -1; x < 2; x++){
+				for( y = -1; y < 2; y++){
+					if((xCoordinate + x > 0 && xCoordinate + x <= 8) && (yCoordinate + y > 0 && yCoordinate + y <= 8))
+					{
+						this.colorArray[xCoordinate + x][yCoordinate + y] = Color.GRAY; 
+						this.repaint();	
+						//Muestra y chequea que los cuadrados al rededor tengan bombas o no
+						this.minesInPerimeter(xCoordinate + x, yCoordinate + y);
+
+					}
+
+				}
+			}
+			
+		}
 		
 		//Checks how many bombs are in the perimeter of that square
 		public int minesInPerimeter(int xCoordinate, int yCoordinate){

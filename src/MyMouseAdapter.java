@@ -131,35 +131,18 @@ public class MyMouseAdapter extends MouseAdapter {
 							break;
 						}
 					
-					
-			
-		
 						else if(myPanel.minesInPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY) == 0){
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.GRAY; 
+//							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.GRAY; 
+							myPanel.uncoverPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 							myPanel.repaint();
 							System.out.println(myPanel.minesInPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY));
 						}
 						else{
 							//Poner el numer de bombas que tiene al rededor
-							
-						}
+							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.GRAY; 
+							myPanel.repaint();	
 
-						
-					
-					
-//						if ((gridX == 0) || (gridY == 0)) {
-//							//On the left column and on the top row... do nothing
-//						
-//							//On the grid other than on the left column and on the top row:
-//							Color newColor = null;
-//							switch (generator.nextInt(5)) {
-//							case 0:
-//								newColor = Color.BLACK;
-//								break;
-//							}
-//							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
-//							myPanel.repaint();
-//						}
+						}											
 					}
 				}
 			
