@@ -132,7 +132,6 @@ public class MyMouseAdapter extends MouseAdapter {
 						}
 					
 						else if(myPanel.minesInPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY) == 0){
-//							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.GRAY; 
 							myPanel.uncoverPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 							myPanel.repaint();
 							System.out.println(myPanel.minesInPerimeter(myPanel.mouseDownGridX, myPanel.mouseDownGridY));
